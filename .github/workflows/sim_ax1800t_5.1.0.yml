@@ -128,6 +128,13 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
+    - name: Upload bin to artifact
+      uses: actions/upload-artifact@main
+      if: env.STATUS == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin
+
     - name: Cleanup bin
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
@@ -136,20 +143,19 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "STATUS=success" >> $GITHUB_ENV
     
-    - name: Create release tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      run: |
-        echo "RELEASETAG=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_ENV
-        touch release.txt
-        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ env.URL }})" >> release.txt
-        echo "STATUS=success" >> $GITHUB_ENV
-
     - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
-      if: env.UPLOAD_RELEASE == 'true' && env.STATUS == 'success' && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      id: release
+      uses: ncipollo/release-action@v1
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        tag_name: ${{ env.RELEASETAG }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+        name: R${{ steps.organize.outputs.release_tag }} for SIM AX18T
+        allowUpdates: true
+        removeArtifacts: true
+        tag: ${{ steps.organize.outputs.release_tag }}
+        commit: main
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: ${{ env.FIRMWARE }}/*
+        body: |
+          - 默认IP：192.168.2.1
+          - 默认密码：password
+
