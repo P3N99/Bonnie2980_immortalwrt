@@ -29,22 +29,6 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-    - name: Free Disk Space (Ubuntu)
-      uses: jlumbroso/free-disk-space@main
-      with:
-        # this might remove tools that are actually needed,
-        # if set to "true" but frees about 6 GB
-        tool-cache: false
-        
-        # all of these default to true, but feel free to set to
-        # "false" if necessary for your workflow
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        docker-images: true
-        swap-storage: true
-        
     - name: Checkout
       uses: actions/checkout@main
 
@@ -100,8 +84,6 @@ jobs:
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
-        rm -rf feeds/luci/applications/luci-app-openclash
-        rm -rf feeds/luci/luci-app-openclash
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: Download packages
@@ -128,20 +110,21 @@ jobs:
       if: (!cancelled())
       run: df -hT
 
-    - name: Upload bin to artifact
-      uses: actions/upload-artifact@main
-      if: env.STATUS == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      with:
-        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: openwrt/bin
-
-    - name: Cleanup bin
+    - name: Organize files
+      id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "STATUS=success" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
+
+    - name: Upload bin directory
+      uses: actions/upload-artifact@main
+      if: env.STATUS == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin
     
     - name: Upload firmware to release
       id: release
