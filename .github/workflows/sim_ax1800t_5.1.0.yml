@@ -124,7 +124,7 @@ jobs:
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         echo "release_tag=$(date +"%Y.%m.%d-%H%M")">> $GITHUB_OUTPUT
-        echo "名称：SIM AX18T" >> release.txt
+        echo "名称：SIM AX18T 无wifi固件(padavanonly)" >> release.txt
         echo "默认网关：192.168.2.1" >> release.txt
         echo "默认用户和密码：root password" >> release.txt
         touch release.txt
