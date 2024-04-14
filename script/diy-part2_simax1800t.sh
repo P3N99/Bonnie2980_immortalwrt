@@ -16,13 +16,13 @@ sed -i 's/192.168.6.1/192.168.2.1/g' package/base-files/files/bin/config_generat
 sed -i 's/ImmortalWrt/SIM AX18T/g' package/base-files/files/bin/config_generate
 
 # 修改闭源驱动2G wifi名称
-sed -i 's/SSID1=CR660X_2.4G/SSID1=AX1800T/g' package/emortal/mtkhqos_util/files/mt7615.1.2G.dat
+#sed -i 's/SSID1=CR660X_2.4G/SSID1=AX1800T/g' package/emortal/mtkhqos_util/files/mt7615.1.2G.dat
 
 # 修改闭源驱动5G wifi名称
-sed -i 's/SSID1=Openwrt_5G/SSID1=AX1800T-5G/g' package/emortal/mtkhqos_util/files/mt7615.1.5G.dat
+#sed -i 's/SSID1=Openwrt_5G/SSID1=AX1800T-5G/g' package/emortal/mtkhqos_util/files/mt7615.1.5G.dat
 
 # 修改闭源驱动5G wifi信道
-sed -i 's/Channel=44/Channel=149/g' package/emortal/mtkhqos_util/files/mt7615.1.5G.dat
+#sed -i 's/Channel=44/Channel=149/g' package/emortal/mtkhqos_util/files/mt7615.1.5G.dat
 
 # 添加个性信息
 #sed -i 's/22.5.5/22.5.5 by nanchuci/g' ./package/lean/default-settings/files/zzz-default-settings
