@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 env:
-  REPO_URL: https://github.com/P3N99/VB1980-237immortalwrt.git
+  REPO_URL: https://github.com/vb1980/padavanonly_immortalwrt.git
   REPO_BRANCH: mt7915_mtwifi
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: config/sim_ax1800t.config
