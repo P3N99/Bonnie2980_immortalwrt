@@ -16,7 +16,7 @@ env:
   REPO_URL: https://github.com/P3N99/VB1980-237immortalwrt.git
   REPO_BRANCH: mt7915_mtwifi
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: config/sim_ax1800t.config
+  CONFIG_FILE: config/sim-ax18t-new.config
   DIY_P1_SH: script/diy-part1.sh
   DIY_P2_SH: script/diy-part2_simax1800t.sh
   UPLOAD_BIN_DIR: false  
