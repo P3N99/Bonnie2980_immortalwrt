@@ -7,7 +7,7 @@
 #
 #
 
-name: SIM AX1800T new
+name: build immortalwrt SIM AX1800T new
 
 on: 
   workflow_dispatch:
