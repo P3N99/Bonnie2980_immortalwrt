@@ -140,7 +140,7 @@ jobs:
         artifacts: ${{ env.FIRMWARE }}/*
         body: |
           - SIM AX18T lede(开源，超频1G)
-          - 默认IP：192.168.2.1
+          - 默认IP：192.168.3.1
           - 默认密码：password
 
     - name: Delete workflow runs 删除工作流运行
@@ -153,7 +153,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.2.1
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 3
+        keep_latest: 5
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
